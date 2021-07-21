@@ -12,9 +12,9 @@ The good:
 
 The bad:
 
-- Doesn't work well with Docusaurus sites. Page content got cut off [Issue reported](https://www.princexml.com/forum/topic/4608)
+- Doesn't work well with Docusaurus sites. Page content got cut off. [Issue reported](https://www.princexml.com/forum/topic/4608)
 - Watermark on generated PDF make it hard to handle in CI/CD environments
-- Doesn't works with some CSS syntax (e.g. `mask-image`)
+- Doesn't work with some CSS syntax (e.g. `mask-image`)
 
 The ugly:
 
@@ -41,12 +41,11 @@ The good:
 The bad:
 
 - Doesn't work well Dark Mode (not an issue in Ci/CD environments)
-- Watermark on generated PDF make it hard to handle in CI/CD environment
+- No ToC
 
 The ugly:
 
 - Based on Puppeteer make the text cannot be copied cor searched correctly
-- No ToC
 - Link anchors (links start with `#`) not well handled
 
 Usage:

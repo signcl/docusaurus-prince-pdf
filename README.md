@@ -40,7 +40,7 @@ The good:
 
 The bad:
 
-- Doesn't work well Dark Mode (not an issue in Ci/CD environments)
+- Doesn't work well with system Dark Mode. You will get a dark background in generated PDF. But it's not an issue in Ci/CD environments
 - No ToC
 
 The ugly:

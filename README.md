@@ -45,7 +45,7 @@ The bad:
 
 The ugly:
 
-- Based on Puppeteer make the text cannot be copied cor searched correctly
+- Based on Puppeteer make the text cannot be copied or searched correctly
 - Link anchors (links start with `#`) not well handled
 
 Usage:

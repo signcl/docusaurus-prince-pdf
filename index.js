@@ -21,7 +21,7 @@ function requestPage(url) {
       if (nextLinkEl) {
         let nextLink = `${baseUrl}${nextLinkEl.href}/`;
 
-        console.log(`Get link: ${nextLink}`);
+        console.log(`Got link: ${nextLink}`);
 
         buffer.add(nextLink);
         requestPage(nextLink);

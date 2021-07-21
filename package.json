@@ -1,0 +1,12 @@
+{
+  "name": "openbayes-docs-pdf",
+  "version": "1.0.0",
+  "description": "Extract rendered data from Docusaurus and generate PDF",
+  "main": "index.js",
+  "repository": "https://github.com/signcl/openbayes-docs-pdf",
+  "author": "Tunghsiao Liu",
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^16.6.0"
+  }
+}

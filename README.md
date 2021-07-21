@@ -51,5 +51,5 @@ The ugly:
 Usage:
 
 ```bash
-mr-pdf --initialDocURLs="https://dev.openbayes.com/docs/" --paginationSelector=".pagination-nav__item--next > a" --contentSelector="article"
+npx mr-pdf --initialDocURLs="https://dev.openbayes.com/docs/" --paginationSelector=".pagination-nav__item--next > a" --contentSelector="article"
 ```

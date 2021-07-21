@@ -22,10 +22,18 @@ The ugly:
 
 Usage:
 
+First generate page list requied by Prince:
+
+```
+node index.js
+```
+
+Then generate PDF using Prince:
+
 ```bash
-$ brew cask install prince
-$ yarn install
-$ bash generate-pdf.sh
+brew cask install prince
+yarn install
+bash generate-pdf.sh
 ```
 
 ## Method 2: mr-pdf

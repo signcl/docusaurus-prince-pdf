@@ -1,6 +1,6 @@
 {
   "name": "docusaurs-prince-pdf",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Extract rendered data from Docusaurus and generate PDF, the hard way",
   "main": "index.js",
   "bin": "index.js",

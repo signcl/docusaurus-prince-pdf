@@ -29,13 +29,13 @@ Usage:
 See help screen for details:
 
 ```bash
-npx docusaurs-prince-pdf -h
+npx docusaurus-prince-pdf -h
 ```
 
 Example:
 
 ```bash
-npx docusaurs-prince-pdf -u https://openbayes.com/
+npx docusaurus-prince-pdf -u https://openbayes.com/
 ```
 
 To generate PDF from a local Docusaurus instance. You need to first build the site locally, then run the following command:
@@ -45,7 +45,7 @@ To generate PDF from a local Docusaurus instance. You need to first build the si
 yarn serve
 
 # Generate PDF from local Docusaurus instance
-npx docusaurs-prince-pdf -u http://localhost:4000 # Change port to your serving port
+npx docusaurus-prince-pdf -u http://localhost:4000 # Change port to your serving port
 ```
 
 ## Method 2: mr-pdf

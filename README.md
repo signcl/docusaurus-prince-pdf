@@ -29,13 +29,13 @@ Usage:
 See help screen for details:
 
 ```bash
-node index -h
+npx docusaurs-prince-pdf -h
 ```
 
 Example:
 
 ```bash
-node index -u https://openbayes.com/
+npx docusaurs-prince-pdf -u https://openbayes.com/
 ```
 
 To generate PDF from a local Docusaurus instance. You need to first build the site locally, then run the following command:

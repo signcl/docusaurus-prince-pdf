@@ -1,7 +1,7 @@
 {
   "name": "openbayes-docs-pdf",
   "version": "1.0.0",
-  "description": "Extract rendered data from Docusaurus and generate PDF",
+  "description": "Extract rendered data from Docusaurus and generate PDF, the hard way",
   "main": "index.js",
   "type": "module",
   "repository": "https://github.com/signcl/openbayes-docs-pdf",

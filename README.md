@@ -1,6 +1,10 @@
 # OpenBayes Documentation PDF Generator
 
-Generate PDF based on OpenBayes Documentation
+Extract rendered data from Docusaurus and generate PDF, the hard way
+
+This project is using the method 1 for generating PDF. You must [Prince](https://www.princexml.com/) installed on your local machine.
+
+The following methods can be used to generate PDF from Docusaurus sites:
 
 ## Method 1: Prince
 
@@ -12,7 +16,7 @@ The good:
 
 The bad:
 
-- Doesn't work well with Docusaurus sites. Page content got cut off. [Issue reported](https://www.princexml.com/forum/topic/4608)
+- Doesn't work well with Docusaurus sites. Page content got cut off. [Issue reported (now fixed!)](https://www.princexml.com/forum/topic/4608)
 - Watermark on generated PDF make it hard to handle in CI/CD environments
 - Doesn't work with some CSS syntax (e.g. `mask-image`)
 
@@ -22,18 +26,26 @@ The ugly:
 
 Usage:
 
-First generate page list requied by Prince:
-
-```
-node index.js
-```
-
-Then generate PDF using Prince:
+See help screen for details:
 
 ```bash
-brew cask install prince
-yarn install
-bash generate-pdf.sh
+node index -h
+```
+
+Example:
+
+```bash
+node index -u https://openbayes.com/
+```
+
+To generate PDF from a local Docusaurus instance. You need to first build the site locally, then run the following command:
+
+```bash
+# Serve built site locally
+yarn serve
+
+# Generate PDF from local Docusaurus instance
+node index -u http://localhost:4000 # Change port to your serving port
 ```
 
 ## Method 2: mr-pdf
@@ -44,7 +56,6 @@ The good:
 - Works with Docusaurus sites
 - CI/CD friendly
 - Based on Puppeteer make it works for most modern CSS syntax (e.g. `mask-image`)
-
 
 The bad:
 
@@ -59,5 +70,5 @@ The ugly:
 Usage:
 
 ```bash
-npx mr-pdf --initialDocURLs="https://dev.openbayes.com/docs/" --paginationSelector=".pagination-nav__item--next > a" --contentSelector="article"
+npx mr-pdf --initialDocURLs="https://openbayes.com/docs/" --paginationSelector=".pagination-nav__item--next > a" --contentSelector="article"
 ```

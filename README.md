@@ -1,4 +1,4 @@
-# OpenBayes Documentation PDF Generator
+# Docusaurus Prince PDF Generator
 
 Extract rendered data from Docusaurus and generate PDF, the hard way
 

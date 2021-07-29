@@ -2,7 +2,7 @@
 
 Extract rendered data from Docusaurus and generate PDF, the hard way
 
-This project is using the method 1 for generating PDF. You must [Prince](https://www.princexml.com/) installed on your local machine.
+This project is using the method 1 for generating PDF. You must have [Prince](https://www.princexml.com/) installed on your local machine.
 
 The following methods can be used to generate PDF from Docusaurus sites:
 

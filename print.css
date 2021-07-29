@@ -1,0 +1,26 @@
+@media print {
+  /* Fix pages cut off bug by Prince*/
+  /* Ref https://www.princexml.com/forum/topic/4608 */
+  .row {
+    display: block !important;
+  }
+
+  .markdown header h1 { string-set: doctitle content() }
+
+  @page {
+    prince-shrink-to-fit: auto;
+  }
+
+  /* Elements should be removed in PDF */
+  .navbar,
+  .pagination-nav,
+  div[class*="docItemContainer"] article footer,
+  aside[class*="docSidebarContainer"],
+  a[class*="skipToContent"],
+  div[class*="lastUpdated"],
+  div[class*="tocCollapsible"],
+  div[class*="tableOfContents"],
+  .footer {
+    display: none !important;
+  }
+}

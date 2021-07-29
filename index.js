@@ -15,6 +15,11 @@ const argv = yargs(hideBin(process.argv))
     description: 'Custom base URL',
     type: 'string',
   })
+  .option('dest', {
+    alias: 'd',
+    description: 'Working directory. Default to ./pdf',
+    type: 'string',
+  })
   .option('file', {
     alias: 'f',
     description: 'Change default list output filename',
@@ -23,6 +28,10 @@ const argv = yargs(hideBin(process.argv))
   .option('output', {
     alias: 'o',
     description: 'Change PDF output filename',
+    type: 'string',
+  })
+  .option('prince-args', {
+    description: 'Additional options for Prince',
     type: 'string',
   })
   .option('list-only', {
@@ -38,9 +47,10 @@ const argv = yargs(hideBin(process.argv))
   .argv;
 
 const baseUrl = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
-const dest = argv.dest || './output';
-const listFile = argv.file || `${dest}/list.txt`;
-const pdfFile = argv.output || `${dest}/docs.pdf`;
+const parsedUrl = new URL(baseUrl);
+const dest = argv.dest || './pdf';
+const listFile = argv.file || `${dest}/${parsedUrl.hostname}.txt`;
+const pdfFile = argv.output || `${dest}/${parsedUrl.hostname}.pdf`;
 
 function execute(cmd) {
   const s = (b) => String(b).trim();
@@ -55,7 +65,10 @@ function execute(cmd) {
 
 async function generatePdf(list, filename) {
   console.log(`Generating PDF ${filename}`);
-  await execute(`prince --no-warn-css --input-list=${list} -o ${filename}`).then(resp => {
+
+  const args = argv.princeArgs || '';
+
+  await execute(`prince --no-warn-css --style=print.css --input-list=${list} -o ${filename} ${args}`).then(resp => {
     console.log(resp.stdout);
     console.log(`Done`);
   }).catch(err => {

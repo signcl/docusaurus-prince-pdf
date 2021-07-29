@@ -31,6 +31,14 @@ const argv = yargs(hideBin(process.argv))
     description: 'Change PDF output filename',
     type: 'string',
   })
+  .option('scope', {
+    description: 'Change scope. Default to /docs/',
+    type: 'string',
+  })
+  .option('include-index', {
+    description: 'Include <scope>/ in generated PDF',
+    type: 'bolean',
+  })
   .option('prince-args', {
     description: 'Additional options for Prince',
     type: 'string',
@@ -50,8 +58,10 @@ const argv = yargs(hideBin(process.argv))
 const baseUrl = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
 const parsedUrl = new URL(baseUrl);
 const dest = argv.dest || './pdf';
-const listFile = argv.file || `${dest}/${parsedUrl.hostname}.txt`;
-const pdfFile = argv.output || `${dest}/${parsedUrl.hostname}.pdf`;
+const scope = argv.scope || '/docs/';
+const scopeName = scope ? `-${scope.replace(/\/$/, '').replace(/^\//, '')}` : '';
+const listFile = argv.file || `${dest}/${parsedUrl.hostname}${scopeName}.txt`;
+const pdfFile = argv.output || `${dest}/${parsedUrl.hostname}${scopeName}.pdf`;
 
 function execute(cmd) {
   const s = (b) => String(b).trim();
@@ -118,5 +128,10 @@ async function requestPage(url) {
 if (argv.pdfOnly) {
   generatePdf(listFile, pdfFile);
 } else {
-  requestPage(`${baseUrl}/docs/`);
+  if (argv.includeIndex) {
+    console.log(`Adding index: ${baseUrl}${scope}`);
+    buffer.add(`${baseUrl}${scope}`);
+  }
+
+  requestPage(`${baseUrl}${scope}`);
 }

@@ -1,45 +1,37 @@
-const fs = require('fs')
-const https = require('https');
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
+import fs from 'fs';
+import got from 'got';
+import jsdom from 'jsdom';
 
+const { JSDOM } = jsdom;
 const baseUrl = 'https://dev.openbayes.com';
 const buffer = new Set();
 
-function requestPage(url) {
-  https.get(url, res => {
-    let data = '';
+async function requestPage(url) {
+  await got(url).then(resp => {
+    const dom = new JSDOM(resp.body);
+    const nextLinkEl = dom.window.document.querySelector('.pagination-nav__item--next > a');
 
-    res.on('data', chunk => {
-      data += chunk;
-    });
+    if (nextLinkEl) {
+      let nextLink = `${baseUrl}${nextLinkEl.href}/`;
 
-    res.on('end', () => {
-      const dom = new JSDOM(data);
-      const nextLinkEl = dom.window.document.querySelector('.pagination-nav__item--next > a');
+      console.log(`Got link: ${nextLink}`);
 
-      if (nextLinkEl) {
-        let nextLink = `${baseUrl}${nextLinkEl.href}/`;
+      buffer.add(nextLink);
+      requestPage(nextLink);
+    } else {
+      console.log('No next link found!');
 
-        console.log(`Got link: ${nextLink}`);
+      fs.writeFile('list.txt', [...buffer].join('\n'), err => {
+        console.log(`Writing buffer (${buffer.size} links) to list.txt`);
 
-        buffer.add(nextLink);
-        requestPage(nextLink);
-      } else {
-        console.log('No next link found!');
-
-        fs.writeFile('list.txt', [...buffer].join('\n'), err => {
-          console.log(`Writing buffer (${buffer.size} links) to list.txt`);
-
-          if (err) {
-            console.error(err);
-            return;
-          }
-        })
-      }
-    });
-  }).on('error', err => {
-    console.log('Error: ', err.message);
+        if (err) {
+          console.error(err);
+          return;
+        }
+      })
+    }
+  }).catch(err => {
+    console.log(`Error:`, err);
   });
 }
 

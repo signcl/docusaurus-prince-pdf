@@ -45,7 +45,7 @@ To generate PDF from a local Docusaurus instance. You need to first build the si
 yarn serve
 
 # Generate PDF from local Docusaurus instance
-node index -u http://localhost:4000 # Change port to your serving port
+npx docusaurs-prince-pdf -u http://localhost:4000 # Change port to your serving port
 ```
 
 ## Method 2: mr-pdf

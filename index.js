@@ -39,6 +39,14 @@ const argv = yargs(hideBin(process.argv))
     description: 'Include <scope>/ in generated PDF',
     type: 'bolean',
   })
+  .option('prepend', {
+    description: 'Prepend additional pages, split with comma',
+    type: 'string',
+  })
+  .option('append', {
+    description: 'Append additional pages, split with comma',
+    type: 'string',
+  })
   .option('prince-args', {
     description: 'Additional options for Prince',
     type: 'string',
@@ -101,6 +109,14 @@ async function requestPage(url) {
     } else {
       console.log('No next link found!');
 
+      if (argv.append) {
+        argv.append.split(',').map(item => {
+          const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
+          buffer.add(url);
+          console.log(`Got link: ${url} [append]`);
+        });
+      }
+
       if (buffer.size > 0) {
         fs.writeFile(listFile, [...buffer].join('\n'), async err => {
           console.log(`Writing buffer (${buffer.size} links) to ${listFile}`);
@@ -128,8 +144,17 @@ async function requestPage(url) {
 if (argv.pdfOnly) {
   generatePdf(listFile, pdfFile);
 } else {
+
+  if (argv.prepend) {
+    argv.prepend.split(',').map(item => {
+      const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
+      buffer.add(url);
+      console.log(`Got link: ${url} [prepend]`);
+    });
+  }
+
   if (argv.includeIndex) {
-    console.log(`Adding index: ${baseUrl}${scope}`);
+    console.log(`Got link: ${baseUrl}${scope} [index]`);
     buffer.add(`${baseUrl}${scope}`);
   }
 

@@ -1,10 +1,67 @@
 import fs from 'fs';
+import { exec } from 'child_process';
+
 import got from 'got';
 import jsdom from 'jsdom';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 const { JSDOM } = jsdom;
-const baseUrl = 'https://dev.openbayes.com';
 const buffer = new Set();
+
+const argv = yargs(hideBin(process.argv))
+  .option('url', {
+    alias: 'u',
+    description: 'Custom base URL',
+    type: 'string',
+  })
+  .option('file', {
+    alias: 'f',
+    description: 'Change default list output filename',
+    type: 'string',
+  })
+  .option('output', {
+    alias: 'o',
+    description: 'Change PDF output filename',
+    type: 'string',
+  })
+  .option('list-only', {
+    description: 'Fetch list only without generating PDF',
+    type: 'bolean',
+  })
+  .option('pdf-only', {
+    description: 'Generate PDF only without fetching list. Ensure list exists',
+    type: 'bolean',
+  })
+  .help()
+  .alias('help', 'h')
+  .argv;
+
+const baseUrl = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
+const dest = argv.dest || './output';
+const listFile = argv.file || `${dest}/list.txt`;
+const pdfFile = argv.output || `${dest}/docs.pdf`;
+
+function execute(cmd) {
+  const s = (b) => String(b).trim();
+
+  return new Promise((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) return reject(error);
+      resolve({ stdout: s(stdout), stderr: s(stderr) });
+    });
+  });
+}
+
+async function generatePdf(list, filename) {
+  console.log(`Generating PDF ${filename}`);
+  await execute(`prince --no-warn-css --input-list=${list} -o ${filename}`).then(resp => {
+    console.log(resp.stdout);
+    console.log(`Done`);
+  }).catch(err => {
+    console.log(err);
+  });
+}
 
 async function requestPage(url) {
   await got(url).then(resp => {
@@ -12,8 +69,7 @@ async function requestPage(url) {
     const nextLinkEl = dom.window.document.querySelector('.pagination-nav__item--next > a');
 
     if (nextLinkEl) {
-      let nextLink = `${baseUrl}${nextLinkEl.href}/`;
-
+      const nextLink = `${baseUrl}${nextLinkEl.href}`;
       console.log(`Got link: ${nextLink}`);
 
       buffer.add(nextLink);
@@ -21,18 +77,32 @@ async function requestPage(url) {
     } else {
       console.log('No next link found!');
 
-      fs.writeFile('list.txt', [...buffer].join('\n'), err => {
-        console.log(`Writing buffer (${buffer.size} links) to list.txt`);
+      if (buffer.size > 0) {
+        fs.writeFile(listFile, [...buffer].join('\n'), async err => {
+          console.log(`Writing buffer (${buffer.size} links) to ${listFile}`);
 
-        if (err) {
-          console.error(err);
-          return;
-        }
-      })
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          if (!argv.listOnly) {
+            generatePdf(listFile, pdfFile);
+          }
+        });
+      } else {
+        console.log('No buffer to write!');
+      }
     }
   }).catch(err => {
     console.log(`Error:`, err);
   });
 }
 
-requestPage(`${baseUrl}/docs/`);
+!fs.existsSync(dest) && fs.mkdirSync(dest);
+
+if (argv.pdfOnly) {
+  generatePdf(listFile, pdfFile);
+} else {
+  requestPage(`${baseUrl}/docs/`);
+}

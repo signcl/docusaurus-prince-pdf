@@ -48,7 +48,7 @@ yarn serve
 npx docusaurus-prince-pdf -u http://localhost:4000 # Change port to your serving port
 ```
 
-## Method 2: mr-pdf
+## Method 2: mr-pdf (not used in this project)
 
 The good:
 

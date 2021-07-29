@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "got": "^11.8.2",
-    "jsdom": "^16.6.0"
+    "jsdom": "^16.6.0",
+    "yargs": "^17.0.1"
   }
 }

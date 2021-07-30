@@ -48,9 +48,9 @@ jobs:
 
     - name: Install Prince
       run: |
-        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -o prince-linux-generic-x86_64.tar.gz
-        tar zxf prince-linux-generic-x86_64.tar.gz
-        cd prince-linux-generic-x86_64
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
+        cd prince-14.2-linux-generic-x86_64
         yes "" | sudo ./install.sh
 
     - name: Build PDF

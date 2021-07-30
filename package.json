@@ -9,7 +9,7 @@
   "author": "Tunghsiao Liu",
   "license": "MIT",
   "scripts": {
-    "build": "node index.js -u https://docusaurus.io/docs"
+    "build": "node index.js -u https://docusaurus.io"
   },
   "dependencies": {
     "got": "^11.8.2",

@@ -1,0 +1,58 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: CI Test
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build-n-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        # Fetch all history for Docusaurus `showLastUpdateTime` to work
+        # https://github.com/facebook/docusaurus/issues/2798
+        fetch-depth: 0
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+
+    - name: Get Yarn cache dir
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Set up cache key for node_modules
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install Node.js dependencies
+      run: yarn --frozen-lockfile
+
+    - name: Build PDF
+      run: yarn build
+
+    - name: Upload results
+      uses: actions/upload-artifact@v2
+      with:
+        name: result
+        path: |
+          pdf/docusaurus.io-docs.pdf
+          pdf/docusaurus.io-docs.txt

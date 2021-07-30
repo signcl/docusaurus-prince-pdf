@@ -8,6 +8,9 @@
   "repository": "https://github.com/signcl/docusaurus-prince-pdf",
   "author": "Tunghsiao Liu",
   "license": "MIT",
+  "scripts": {
+    "build": "node index.js -u https://docusaurus.io/docs"
+  },
   "dependencies": {
     "got": "^11.8.2",
     "jsdom": "^16.6.0",

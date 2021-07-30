@@ -10,6 +10,8 @@ import { hideBin } from 'yargs/helpers';
 const { JSDOM } = jsdom;
 const buffer = new Set();
 
+const __dirname = new URL('.', import.meta.url).pathname;
+
 const argv = yargs(hideBin(process.argv))
   .option('url', {
     alias: 'u',
@@ -87,7 +89,7 @@ async function generatePdf(list, filename) {
 
   const args = argv.princeArgs || '';
 
-  await execute(`prince --no-warn-css --style=print.css --input-list=${list} -o ${filename} ${args}`).then(resp => {
+  await execute(`prince --no-warn-css --style=${__dirname}print.css --input-list=${list} -o ${filename} ${args}`).then(resp => {
     console.log(resp.stdout);
     console.log(`Done`);
   }).catch(err => {

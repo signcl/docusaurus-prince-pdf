@@ -4,6 +4,12 @@
 
 Extract rendered data from Docusaurus and generate PDF, the hard way
 
+## Demo/Examples
+
+<img width="1008" alt="Prince PDF for Docusaurus Documentation" src="https://user-images.githubusercontent.com/96356/127639981-68aae100-9b96-4abc-920a-5fd8c6507a0d.png">
+
+You can download it in [GitHub Actions](https://github.com/signcl/docusaurus-prince-pdf/actions/workflows/test.yml) artifacts section to see the result.
+
 This project is using the method 1 for generating PDF. You must have [Prince](https://www.princexml.com/) installed on your local machine.
 
 The following methods can be used to generate PDF from Docusaurus sites:

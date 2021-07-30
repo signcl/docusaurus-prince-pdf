@@ -63,3 +63,4 @@ jobs:
         path: |
           pdf/docusaurus.io-docs.pdf
           pdf/docusaurus.io-docs.txt
+        if-no-files-found: error

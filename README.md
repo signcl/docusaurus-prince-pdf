@@ -20,17 +20,18 @@ The good:
 
 - Best font subsetting support
 - Text can be selected and copy/paste correctly
-- Fancy ToC
+- Fancy Table of Contents
 
 The bad:
 
-- Doesn't work well with Docusaurus sites. Page content got cut off. [Issue reported (now fixed!)](https://www.princexml.com/forum/topic/4608)
-- Watermark on generated PDF make it hard to handle in CI/CD environments
+- Watermark on first page of generated PDF make it hard to handle in CI/CD environments
 - Doesn't work with some CSS syntax (e.g. `mask-image`)
+- Doesn't work with some HTML features (e.g. `srcset`)
+- Commercial license is expensive ([$3,800](https://www.princexml.com/purchase/))
 
 The ugly:
 
-- Commercial license is expensive ([$3,800](https://www.princexml.com/purchase/))
+- None
 
 Usage:
 
@@ -67,8 +68,8 @@ The good:
 
 The bad:
 
-- Doesn't work well with system Dark Mode. You will get a dark background in generated PDF. But it's not an issue in Ci/CD environments
-- No ToC
+- Doesn't work well with system Dark Mode. You will get a dark background in generated PDF when you have `respectPrefersColorScheme` enabled in your Docusaurus instance. But it's not an issue in Ci/CD environments
+- No Table of Contents
 
 The ugly:
 

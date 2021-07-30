@@ -47,7 +47,7 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Install Prince
-      run: gdebi https://www.princexml.com/download/prince_14.2-1_ubuntu20.04_amd64.deb
+      run: apt install https://www.princexml.com/download/prince_14.2-1_ubuntu20.04_amd64.deb -y
 
     - name: Build PDF
       run: yarn build

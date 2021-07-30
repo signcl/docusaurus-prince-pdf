@@ -47,7 +47,11 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Install Prince
-      run: sudo apt install https://www.princexml.com/download/prince_14.2-1_ubuntu20.04_amd64.deb -y
+      run: |
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -o prince-linux-generic-x86_64.tar.gz
+        tar zxf prince-linux-generic-x86_64.tar.gz
+        cd prince-linux-generic-x86_64
+        yes "" | sudo ./install.sh
 
     - name: Build PDF
       run: yarn build

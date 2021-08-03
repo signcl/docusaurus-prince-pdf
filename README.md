@@ -12,11 +12,9 @@ You can download it in [GitHub Actions](https://github.com/signcl/docusaurus-pri
 
 This project is using the method 1 (see below) for generating PDF. You must have [Prince](https://www.princexml.com/) installed on your local machine.
 
-The following methods can be used to generate PDF from Docusaurus sites:
-
 ## Usage
 
-You must have [Prince](https://www.princexml.com/download/) installed first.
+Install [Prince](https://www.princexml.com/download/) first.
 
 Run the following commands to generate PDF:
 
@@ -62,6 +60,8 @@ You can specify the CSS selector if you're using custom Docusaurus theme:
 ```bash
 npx docusaurus-prince-pdf -u https://openbayes.com/ --selector 'nav.custom-pagination-item--next > a'
 ```
+
+The following methods can be used to generate PDF from Docusaurus sites:
 
 ## Method 1: Prince
 

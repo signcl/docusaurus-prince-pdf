@@ -15,7 +15,12 @@ const __dirname = new URL('.', import.meta.url).pathname;
 const argv = yargs(hideBin(process.argv))
   .option('url', {
     alias: 'u',
-    description: 'Custom base URL',
+    description: 'Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/, not https://docusaurus.io/docs/)',
+    type: 'string',
+  })
+  .option('selector', {
+    alias: 's',
+    description: 'CSS selector to find the link of the next page',
     type: 'string',
   })
   .option('dest', {
@@ -100,7 +105,7 @@ async function generatePdf(list, filename) {
 async function requestPage(url) {
   await got(url).then(resp => {
     const dom = new JSDOM(resp.body);
-    const nextLinkEl = dom.window.document.querySelector('.pagination-nav__item--next > a');
+    const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__item--next > a');
 
     if (nextLinkEl) {
       const nextLink = `${baseUrl}${nextLinkEl.href}`;

@@ -108,7 +108,7 @@ async function requestPage(url) {
     const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__item--next > a');
 
     if (nextLinkEl) {
-      const nextLink = `${baseUrl}${nextLinkEl.href}`;
+      const nextLink = `${parsedUrl.origin}${nextLinkEl.href}`;
       console.log(`Got link: ${nextLink}`);
 
       buffer.add(nextLink);
@@ -118,7 +118,7 @@ async function requestPage(url) {
 
       if (argv.append) {
         argv.append.split(',').map(item => {
-          const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
+          const url = item.match(/^https?:\/\//) ? item : `${parsedUrl.origin}${scope}${item}`;
           buffer.add(url);
           console.log(`Got link: ${url} [append]`);
         });
@@ -154,16 +154,16 @@ if (argv.pdfOnly) {
 
   if (argv.prepend) {
     argv.prepend.split(',').map(item => {
-      const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
+      const url = item.match(/^https?:\/\//) ? item : `${parsedUrl.origin}${scope}${item}`;
       buffer.add(url);
       console.log(`Got link: ${url} [prepend]`);
     });
   }
 
   if (argv.includeIndex) {
-    console.log(`Got link: ${baseUrl}${scope} [index]`);
-    buffer.add(`${baseUrl}${scope}`);
+    console.log(`Got link: ${parsedUrl.origin}${scope} [index]`);
+    buffer.add(`${parsedUrl.origin}${scope}`);
   }
 
-  requestPage(`${baseUrl}${scope}`);
+  requestPage(`${parsedUrl.origin}${scope}`);
 }

@@ -10,9 +10,58 @@ Extract rendered data from Docusaurus and generate PDF, the hard way
 
 You can download it in [GitHub Actions](https://github.com/signcl/docusaurus-prince-pdf/actions/workflows/test.yml) artifacts section to see the result.
 
-This project is using the method 1 for generating PDF. You must have [Prince](https://www.princexml.com/) installed on your local machine.
+This project is using the method 1 (see below) for generating PDF. You must have [Prince](https://www.princexml.com/) installed on your local machine.
 
 The following methods can be used to generate PDF from Docusaurus sites:
+
+## Usage
+
+You must have [Prince](https://www.princexml.com/download/) installed first.
+
+Run the following commands to generate PDF:
+
+```bash
+# Genrate PDF from specific site
+npx docusaurus-prince-pdf -u https://openbayes.com/
+
+# Change generating scope to `/api/` (Default: `/docs/`)
+npx docusaurus-prince-pdf -u https://openbayes.com/ --scope /api/
+
+# Custom working (output) directory
+npx docusaurus-prince-pdf -u https://openbayes.com/ --dest ./pdf-output
+
+# Custom output file name
+npx docusaurus-prince-pdf -u https://openbayes.com/ --output docs.pdf
+```
+
+To generate PDF from a local Docusaurus instance. You need to first build the site locally:
+
+```bash
+# Build the site
+yarn build
+
+# Serve built site locally
+yarn serve
+
+# Generate PDF from local Docusaurus instance
+npx docusaurus-prince-pdf -u http://localhost:4000 # Change port to your serving port
+```
+
+See help screen for more usages:
+
+```bash
+npx docusaurus-prince-pdf -h
+```
+
+## How it Works
+
+Like [mr-pdf](https://github.com/kohheepeace/mr-pdf), this package looks for the next pagination links on generated Docusaurus site. Collect them in a list and then pass the list to Prince to generate the PDF.
+
+You can specify the CSS selector if you're using custom Docusaurus theme:
+
+```bash
+npx docusaurus-prince-pdf -u https://openbayes.com/ --selector 'nav.custom-pagination-item--next > a'
+```
 
 ## Method 1: Prince
 
@@ -33,31 +82,7 @@ The ugly:
 
 - None
 
-Usage:
-
-See help screen for details:
-
-```bash
-npx docusaurus-prince-pdf -h
-```
-
-Example:
-
-```bash
-npx docusaurus-prince-pdf -u https://openbayes.com/
-```
-
-To generate PDF from a local Docusaurus instance. You need to first build the site locally, then run the following command:
-
-```bash
-# Serve built site locally
-yarn serve
-
-# Generate PDF from local Docusaurus instance
-npx docusaurus-prince-pdf -u http://localhost:4000 # Change port to your serving port
-```
-
-## Method 2: mr-pdf (not used in this project)
+## Method 2: [mr-pdf](https://github.com/kohheepeace/mr-pdf) (not used in this project)
 
 The good:
 

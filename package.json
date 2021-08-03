@@ -12,6 +12,9 @@
     "build": "node index.js -u https://docusaurus.io",
     "release": "npx release-it"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "got": "^11.8.2",
     "jsdom": "^16.6.0",

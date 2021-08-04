@@ -55,11 +55,11 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
   })
   .option('list-only', {
-    description: 'Fetch list only without generating PDF',
+    description: 'Fetch list without generating PDF',
     type: 'bolean',
   })
   .option('pdf-only', {
-    description: 'Generate PDF only without fetching list. Ensure list exists',
+    description: 'Generate PDF without fetching list. Ensure list exists',
     type: 'bolean',
   })
   .help()

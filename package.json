@@ -9,11 +9,16 @@
   "author": "Tunghsiao Liu",
   "license": "MIT",
   "scripts": {
-    "build": "node index.js -u https://docusaurus.io",
+    "test": "node index.js -u https://docusaurus.io/docs/",
     "release": "npx release-it"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    }
   },
   "dependencies": {
     "got": "^11.8.2",

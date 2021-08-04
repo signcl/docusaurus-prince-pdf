@@ -54,13 +54,11 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: yarn build
+      run: yarn test
 
     - name: Upload results
       uses: actions/upload-artifact@v2
       with:
         name: result
-        path: |
-          pdf/docusaurus.io-docs.pdf
-          pdf/docusaurus.io-docs.txt
+        path: pdf/docusaurus.io-docs.pdf
         if-no-files-found: error

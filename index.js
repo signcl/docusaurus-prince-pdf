@@ -15,7 +15,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 const argv = yargs(hideBin(process.argv))
   .option('url', {
     alias: 'u',
-    description: 'Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/, not https://docusaurus.io/docs/)',
+    description: 'Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/docs/)',
     type: 'string',
   })
   .option('selector', {
@@ -38,12 +38,8 @@ const argv = yargs(hideBin(process.argv))
     description: 'Change PDF output filename',
     type: 'string',
   })
-  .option('scope', {
-    description: 'Change scope. Default to /docs/',
-    type: 'string',
-  })
   .option('include-index', {
-    description: 'Include <scope>/ in generated PDF',
+    description: 'Include / (passed URL) in generated PDF',
     type: 'bolean',
   })
   .option('prepend', {
@@ -70,11 +66,14 @@ const argv = yargs(hideBin(process.argv))
   .alias('help', 'h')
   .argv;
 
-const baseUrl = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
-const parsedUrl = new URL(baseUrl);
+const url = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
+
+const parsedUrl = new URL(url);
+const baseUrl = parsedUrl.origin;
+const scope = parsedUrl.pathname;
+const scopeName = scope !== '/' ? `-${scope.replace(/\/$/, '').replace(/^\//, '').replace(/\//, '-')}` : '';
+
 const dest = argv.dest || './pdf';
-const scope = argv.scope || '/docs/';
-const scopeName = scope ? `-${scope.replace(/\/$/, '').replace(/^\//, '')}` : '';
 const listFile = argv.file || `${dest}/${parsedUrl.hostname}${scopeName}.txt`;
 const pdfFile = argv.output || `${dest}/${parsedUrl.hostname}${scopeName}.pdf`;
 
@@ -108,7 +107,7 @@ async function requestPage(url) {
     const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__item--next > a');
 
     if (nextLinkEl) {
-      const nextLink = `${parsedUrl.origin}${nextLinkEl.href}`;
+      const nextLink = `${baseUrl}${nextLinkEl.href}`;
       console.log(`Got link: ${nextLink}`);
 
       buffer.add(nextLink);
@@ -118,7 +117,7 @@ async function requestPage(url) {
 
       if (argv.append) {
         argv.append.split(',').map(item => {
-          const url = item.match(/^https?:\/\//) ? item : `${parsedUrl.origin}${scope}${item}`;
+          const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
           buffer.add(url);
           console.log(`Got link: ${url} [append]`);
         });
@@ -154,16 +153,16 @@ if (argv.pdfOnly) {
 
   if (argv.prepend) {
     argv.prepend.split(',').map(item => {
-      const url = item.match(/^https?:\/\//) ? item : `${parsedUrl.origin}${scope}${item}`;
+      const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`;
       buffer.add(url);
       console.log(`Got link: ${url} [prepend]`);
     });
   }
 
   if (argv.includeIndex) {
-    console.log(`Got link: ${parsedUrl.origin}${scope} [index]`);
-    buffer.add(`${parsedUrl.origin}${scope}`);
+    console.log(`Got link: ${baseUrl}${scope} [index]`);
+    buffer.add(`${baseUrl}${scope}`);
   }
 
-  requestPage(`${parsedUrl.origin}${scope}`);
+  requestPage(`${baseUrl}${scope}`);
 }

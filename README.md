@@ -19,11 +19,11 @@ Install [Prince](https://www.princexml.com/download/) first.
 Run the following commands to generate PDF:
 
 ```bash
-# Genrate PDF from specific site
-npx docusaurus-prince-pdf -u https://openbayes.com/
+# Genrate PDF from specific site under `docs` scope
+npx docusaurus-prince-pdf -u https://docusaurus.io/docs
 
-# Change generating scope to `/api/` (Default: `/docs/`)
-npx docusaurus-prince-pdf -u https://openbayes.com/ --scope /api/
+# Change generating scope to `/docs/cli/`
+npx docusaurus-prince-pdf -u https://docusaurus.io/docs/cli
 
 # Custom working (output) directory
 npx docusaurus-prince-pdf -u https://openbayes.com/ --dest ./pdf-output

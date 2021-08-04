@@ -51,7 +51,7 @@ See help screen for more usages:
 npx docusaurus-prince-pdf -h
 ```
 
-## How it Works
+## How it works
 
 Like [mr-pdf](https://github.com/kohheepeace/mr-pdf), this package looks for the next pagination links on generated Docusaurus site. Collect them in a list and then pass the list to Prince to generate the PDF.
 
@@ -61,9 +61,11 @@ You can specify the CSS selector if you're using custom Docusaurus theme:
 npx docusaurus-prince-pdf -u https://openbayes.com/ --selector 'nav.custom-pagination-item--next > a'
 ```
 
-The following methods can be used to generate PDF from Docusaurus sites:
+## Why this package?
 
-## Method 1: Prince
+I made a comparison list for the two methods of generating PDF from Docusaurus.
+
+### Method 1: Prince
 
 The good:
 
@@ -82,7 +84,7 @@ The ugly:
 
 - None
 
-## Method 2: [mr-pdf](https://github.com/kohheepeace/mr-pdf) (not used in this project)
+### Method 2: [mr-pdf](https://github.com/kohheepeace/mr-pdf) (not used in this project)
 
 The good:
 

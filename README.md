@@ -26,10 +26,10 @@ npx docusaurus-prince-pdf -u https://docusaurus.io/docs
 npx docusaurus-prince-pdf -u https://docusaurus.io/docs/cli
 
 # Custom working (output) directory
-npx docusaurus-prince-pdf -u https://openbayes.com/ --dest ./pdf-output
+npx docusaurus-prince-pdf -u https://openbayes.com/docs/ --dest ./pdf-output
 
 # Custom output file name
-npx docusaurus-prince-pdf -u https://openbayes.com/ --output docs.pdf
+npx docusaurus-prince-pdf -u https://openbayes.com/docs/ --output docs.pdf
 ```
 
 To generate PDF from a local Docusaurus instance. You need to first build the site locally:

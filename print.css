@@ -1,5 +1,5 @@
 @media print {
-  /* Fix pages cut off bug by Prince*/
+  /* Fix pages cut off bug by Prince */
   /* Ref https://www.princexml.com/forum/topic/4608 */
   .row {
     display: block !important;
@@ -14,6 +14,7 @@
   /* Elements should be removed in PDF */
   .navbar,
   .pagination-nav,
+  a.hash-link,
   div[class*="docItemContainer"] article footer,
   aside[class*="docSidebarContainer"],
   a[class*="skipToContent"],

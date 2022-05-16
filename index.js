@@ -104,7 +104,7 @@ async function generatePdf(list, filename) {
 async function requestPage(url) {
   await got(url).then(resp => {
     const dom = new JSDOM(resp.body);
-    const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__item--next > a');
+    const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__link--next');
 
     if (nextLinkEl) {
       const nextLink = `${baseUrl}${nextLinkEl.href}`;

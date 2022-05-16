@@ -71,7 +71,7 @@ const url = argv.url?.replace(/\/$/, '') || 'https://dev.openbayes.com';
 const parsedUrl = new URL(url);
 const baseUrl = parsedUrl.origin;
 const scope = parsedUrl.pathname;
-const scopeName = scope !== '/' ? `-${scope.replace(/\/$/, '').replace(/^\//, '').replace(/\//, '-')}` : '';
+const scopeName = scope !== '/' ? `-${scope.replace(/\/$/g, '').replace(/^\//g, '').replace(/\//g, '-')}` : '';
 
 const dest = argv.dest || './pdf';
 const listFile = argv.file || `${dest}/${parsedUrl.hostname}${scopeName}.txt`;

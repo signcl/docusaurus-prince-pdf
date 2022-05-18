@@ -76,6 +76,14 @@ const scopeName = scope !== '/' ? `-${scope.replace(/\/$/g, '').replace(/^\//g, 
 const dest = argv.dest || './pdf';
 const listFile = argv.file || `${dest}/${parsedUrl.hostname}${scopeName}.txt`;
 const pdfFile = argv.output || `${dest}/${parsedUrl.hostname}${scopeName}.pdf`;
+const gotOptions = {
+  timeout: {
+    request: 10000,
+  },
+  retry: {
+    limit: 3,
+  }
+}
 
 function execute(cmd) {
   const s = (b) => String(b).trim();
@@ -102,7 +110,7 @@ async function generatePdf(list, filename) {
 }
 
 async function requestPage(url) {
-  await got(url).then(resp => {
+  await got(url, gotOptions).then(resp => {
     const dom = new JSDOM(resp.body);
     const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__link--next');
 

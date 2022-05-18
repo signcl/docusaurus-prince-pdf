@@ -47,7 +47,7 @@ yarn serve
 npx docusaurus-prince-pdf -u http://localhost:4000/docs # Change port to your serving port
 ```
 
-See help screen for more usages:
+See help screen for all options:
 
 ```bash
 npx docusaurus-prince-pdf -h

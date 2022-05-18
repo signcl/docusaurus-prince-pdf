@@ -28,10 +28,6 @@ npx docusaurus-prince-pdf -u https://openbayes.com/docs --dest ./pdf-output
 
 # Custom output file name
 npx docusaurus-prince-pdf -u https://openbayes.com/docs --output docs.pdf
-
-# Use external Prince docker image to generate PDF.
-# See https://github.com/sparanoid/docker-prince for more info
-npx docusaurus-prince-pdf -u https://docusaurus.io/docs/cli --prince-docker
 ```
 
 To generate PDF from a local Docusaurus instance. You need to first build the site locally:
@@ -51,6 +47,27 @@ See help screen for all options:
 
 ```bash
 npx docusaurus-prince-pdf -h
+```
+
+## Docker
+
+You can run this program with Docker image:
+
+```bash
+docker run --rm -it \
+  -v $(pwd)/pdf:/app/pdf \
+  openbayes/docusaurus-prince-pdf \
+  -u https://docusaurus.io/docs/
+```
+
+If you need Asiatic languages support like Chinese and Japanese. You can mount your custom fonts directory to Docker image:
+
+```bash
+docker run --rm -it \
+  -v $(pwd)/pdf:/app/pdf \
+  -v $(pwd)/fonts:/usr/share/fonts/custom/ \
+  openbayes/docusaurus-prince-pdf \
+  -u https://docusaurus.io/docs/
 ```
 
 ## GitHub Actions
@@ -83,7 +100,7 @@ jobs:
     # ...other steps
 ```
 
-You can also run `prince` with prebuilt [Prince Docker image](https://github.com/sparanoid/docker-prince):
+You can also run `prince` with prebuilt Prince Docker image:
 
 ```yaml
 jobs:
@@ -91,7 +108,7 @@ jobs:
     # prerequisites...
 
     - name: Build PDF
-      run: npx docusaurus-prince-pdf -u https://docusaurus.io/docs/ --prince-docker
+      run: docker run --rm -it -v $(pwd)/pdf:/app/pdf openbayes/docusaurus-prince-pdf -u https://docusaurus.io/docs/
 
     # ...other steps
 ```

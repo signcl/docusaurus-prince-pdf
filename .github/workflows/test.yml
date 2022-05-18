@@ -17,6 +17,10 @@ on:
     branches:
       - '**'
 
+env:
+  DOCKERHUB_SLUG: openbayes/docusaurus-prince-pdf
+  GHCR_SLUG: ghcr.io/signcl/docusaurus-prince-pdf
+
 jobs:
   build-n-deploy:
     runs-on: ubuntu-latest

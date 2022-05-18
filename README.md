@@ -53,6 +53,49 @@ See help screen for more usages:
 npx docusaurus-prince-pdf -h
 ```
 
+## GitHub Actions
+
+You can also run this program inside GitHub Actions:
+
+```yaml
+jobs:
+  build:
+    # prerequisites...
+
+    - name: Install Prince
+      run: |
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
+        cd prince-14.2-linux-generic-x86_64
+        yes "" | sudo ./install.sh
+
+    - name: Build PDF
+      run: npx docusaurus-prince-pdf -u https://docusaurus.io/docs/
+
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: result
+        # The output filename can be specified with --output option
+        path: pdf/docusaurus.io-docs.pdf
+        if-no-files-found: error
+
+    # ...other steps
+```
+
+You can also run `prince` with prebuilt [Prince Docker image](https://github.com/sparanoid/docker-prince):
+
+```yaml
+jobs:
+  build:
+    # prerequisites...
+
+    - name: Build PDF
+      run: npx docusaurus-prince-pdf -u https://docusaurus.io/docs/ --prince-docker
+
+    # ...other steps
+```
+
 ## How it works
 
 Like [mr-pdf](https://github.com/kohheepeace/mr-pdf), this package looks for the next pagination links on generated Docusaurus site. Collect them in a list and then pass the list to Prince to generate the PDF.

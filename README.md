@@ -28,6 +28,10 @@ npx docusaurus-prince-pdf -u https://openbayes.com/docs --dest ./pdf-output
 
 # Custom output file name
 npx docusaurus-prince-pdf -u https://openbayes.com/docs --output docs.pdf
+
+# Use external Prince docker image to generate PDF.
+# See https://github.com/sparanoid/docker-prince for more info
+npx docusaurus-prince-pdf -u https://docusaurus.io/docs/cli --prince-docker
 ```
 
 To generate PDF from a local Docusaurus instance. You need to first build the site locally:
@@ -106,3 +110,7 @@ Usage:
 ```bash
 npx mr-pdf --initialDocURLs="https://openbayes.com/docs/" --paginationSelector=".pagination-nav__item--next > a" --contentSelector="article"
 ```
+
+## License
+
+MIT

@@ -54,6 +54,10 @@ const argv = yargs(hideBin(process.argv))
     description: 'Additional options for Prince',
     type: 'string',
   })
+  .option('prince-docker', {
+    description: 'Use external Prince docker image to generate PDF. See https://github.com/sparanoid/docker-prince for more info',
+    type: 'bolean',
+  })
   .option('list-only', {
     description: 'Fetch list without generating PDF',
     type: 'bolean',
@@ -101,7 +105,11 @@ async function generatePdf(list, filename) {
 
   const args = argv.princeArgs || '';
 
-  await execute(`prince --no-warn-css --style=${__dirname}print.css --input-list=${list} -o ${filename} ${args}`).then(resp => {
+  const princeCmd = argv.princeDocker
+    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince:local --no-warn-css --style=/config/print.css --input-list=/config/${list} -o /config/${filename} ${args}`
+    : `prince --no-warn-css --style=${__dirname}print.css --input-list=${list} -o ${filename} ${args}`;
+  console.log(`Executing command: ${princeCmd}`);
+  await execute(princeCmd).then(resp => {
     console.log(resp.stdout);
     console.log(`Done`);
   }).catch(err => {

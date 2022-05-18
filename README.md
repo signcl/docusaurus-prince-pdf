@@ -1,7 +1,5 @@
 # Docusaurus Prince PDF Generator
 
-[![npm version](https://img.shields.io/npm/v/docusaurus-prince-pdf.svg?style=flat)](https://www.npmjs.com/package/docusaurus-prince-pdf)
-
 Extract rendered data from Docusaurus and generate PDF, the hard way
 
 ## Demo/Examples

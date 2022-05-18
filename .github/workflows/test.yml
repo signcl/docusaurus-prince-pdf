@@ -46,15 +46,8 @@ jobs:
     - name: Install Node.js dependencies
       run: yarn --frozen-lockfile
 
-    - name: Install Prince
-      run: |
-        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
-        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
-        cd prince-14.2-linux-generic-x86_64
-        yes "" | sudo ./install.sh
-
     - name: Build PDF
-      run: yarn test
+      run: yarn test --prince-docker
 
     - name: Upload results
       uses: actions/upload-artifact@v3

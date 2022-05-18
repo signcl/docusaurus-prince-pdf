@@ -106,7 +106,7 @@ async function generatePdf(list, filename) {
   const args = argv.princeArgs || '';
 
   const princeCmd = argv.princeDocker
-    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince:local --no-warn-css --style=/config/print.css --input-list=/config/${list} -o /config/${filename} ${args}`
+    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince --no-warn-css --style=/config/print.css --input-list=/config/${list} -o /config/${filename} ${args}`
     : `prince --no-warn-css --style=${__dirname}print.css --input-list=${list} -o ${filename} ${args}`;
   console.log(`Executing command: ${princeCmd}`);
   await execute(princeCmd).then(resp => {

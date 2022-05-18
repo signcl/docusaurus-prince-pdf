@@ -51,6 +51,9 @@ npx docusaurus-prince-pdf -h
 
 ## Docker
 
+- [Docker Hub](https://hub.docker.com/r/openbayes/docusaurus-prince-pdf)
+- [ghcr.io](https://github.com/orgs/signcl/packages/container/package/docusaurus-prince-pdf)
+
 You can run this program with Docker image:
 
 ```bash

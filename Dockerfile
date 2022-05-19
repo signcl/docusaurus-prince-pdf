@@ -29,17 +29,13 @@ RUN prince_arch=$([ "$TARGETARCH" == "arm64" ] && echo "aarch64-musl" || echo "x
     && cd prince \
     && yes "" | ./install.sh
 
-# Add custom fonts
-# ADD fonts/ /usr/share/fonts/
-
 RUN apk add --no-cache \
     terminus-font \
+    ttf-inconsolata \
+    ttf-dejavu \
     font-croscore \
     font-noto \
-    font-noto-cjk \
-    font-noto-cjk-extra \
-    # Asiatic languages like Japanese, etc.:
-    font-noto-thai font-noto-tibetan font-ipa font-sony-misc font-daewoo-misc font-jis-misc \
+    font-noto-extra \
     --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community/
 
 # Install fonts

@@ -6,6 +6,7 @@ import got from 'got';
 import jsdom from 'jsdom';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import pkg from './package.json' assert { type: 'json' };
 
 const { JSDOM } = jsdom;
 const buffer = new Set();
@@ -13,6 +14,11 @@ const buffer = new Set();
 const __dirname = new URL('.', import.meta.url).pathname;
 
 const argv = yargs(hideBin(process.argv))
+  // Workaround for https://github.com/yargs/yargs/issues/1934
+  // TODO: remove once fixed
+  .version(
+    `${pkg.version} -- ${__dirname}`
+  )
   .option('url', {
     alias: 'u',
     description: 'Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/docs/)',
@@ -51,7 +57,7 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
   })
   .option('prince-args', {
-    description: 'Additional options for Prince',
+    description: 'Additional options for Prince. ie. --prince-args="--page-size=\'210mm 297mm\'" or --prince-args "\\-\\-page\\-size=\'210mm 297mm\'"',
     type: 'string',
   })
   .option('prince-docker', {

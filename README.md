@@ -68,7 +68,7 @@ If you need Asiatic languages support like Chinese and Japanese. You can mount y
 ```bash
 docker run --rm -it \
   -v $(pwd)/pdf:/app/pdf \
-  -v $(pwd)/fonts:/usr/share/fonts/custom/ \
+  -v $(pwd)/fonts:/root/.fonts \
   openbayes/docusaurus-prince-pdf \
   -u https://docusaurus.io/docs/
 ```

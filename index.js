@@ -45,7 +45,7 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
   })
   .option('include-index', {
-    description: 'Include / (passed URL) in generated PDF',
+    description: 'Include passed URL in generated PDF',
     type: 'bolean',
   })
   .option('prepend', {

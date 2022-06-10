@@ -49,7 +49,7 @@ See help screen for all options:
 npx docusaurus-prince-pdf -h
 ```
 
-## Docker
+## Docker (Recommended)
 
 - [Docker Hub](https://hub.docker.com/r/openbayes/docusaurus-prince-pdf)
 - [ghcr.io](https://github.com/orgs/signcl/packages/container/package/docusaurus-prince-pdf)
@@ -57,7 +57,7 @@ npx docusaurus-prince-pdf -h
 You can run this program with Docker image:
 
 ```bash
-docker run --rm -it \
+docker run --rm -it --init \
   -v $(pwd)/pdf:/app/pdf \
   openbayes/docusaurus-prince-pdf \
   -u https://docusaurus.io/docs/
@@ -66,7 +66,7 @@ docker run --rm -it \
 If you need Asiatic languages support like Chinese and Japanese. You can mount your custom fonts directory to Docker image:
 
 ```bash
-docker run --rm -it \
+docker run --rm -it --init \
   -v $(pwd)/pdf:/app/pdf \
   -v $(pwd)/fonts:/root/.fonts \
   openbayes/docusaurus-prince-pdf \

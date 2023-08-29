@@ -14,6 +14,7 @@
   /* Elements should be removed in PDF */
   .navbar,
   .pagination-nav,
+  .theme-doc-breadcrumbs,
   a.hash-link,
   div[class*="docItemContainer"] article footer,
   aside[class*="docSidebarContainer"],

@@ -6,7 +6,11 @@ import got from 'got';
 import jsdom from 'jsdom';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import {CookieJar} from 'tough-cookie';
+
 import pkg from './package.json' assert { type: 'json' };
+
+const cookieJar = new CookieJar();
 
 const { JSDOM } = jsdom;
 const buffer = new Set();
@@ -46,7 +50,7 @@ const argv = yargs(hideBin(process.argv))
   })
   .option('include-index', {
     description: 'Include passed URL in generated PDF',
-    type: 'bolean',
+    type: 'boolean',
   })
   .option('prepend', {
     description: 'Prepend additional pages, split with comma',
@@ -62,15 +66,19 @@ const argv = yargs(hideBin(process.argv))
   })
   .option('prince-docker', {
     description: 'Use external Prince docker image to generate PDF. See https://github.com/sparanoid/docker-prince for more info',
-    type: 'bolean',
+    type: 'boolean',
   })
   .option('list-only', {
     description: 'Fetch list without generating PDF',
-    type: 'bolean',
+    type: 'boolean',
   })
   .option('pdf-only', {
     description: 'Generate PDF without fetching list. Ensure list exists',
-    type: 'bolean',
+    type: 'boolean',
+  })
+  .option('cookie', {
+    description: 'Specify the cookie with the domain part, e.g. --cookie="token=123456; domain=example.com;"',
+    type: 'string',
   })
   .help()
   .alias('help', 'h')
@@ -106,14 +114,15 @@ function execute(cmd) {
   });
 }
 
-async function generatePdf(list, filename) {
+async function generatePdf(list, filename, cookie) {
   console.log(`Generating PDF ${filename}`);
 
   const args = argv.princeArgs || '';
+  const cookieArg = cookie ? `--cookie "${cookie}"` : '';
 
   const princeCmd = argv.princeDocker
-    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince --no-warn-css --style=/config/print.css --input-list=/config/${list} -o /config/${filename} ${args}`
-    : `prince --no-warn-css --style=${__dirname}print.css --input-list=${list} -o ${filename} ${args}`;
+    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince --no-warn-css --style=/config/print.css ${cookieArg} --input-list=/config/${list} -o /config/${filename} ${args}`
+    : `prince --no-warn-css --style=${__dirname}print.css ${cookieArg} --input-list=${list} -o ${filename} ${args}`;
   console.log(`Executing command: ${princeCmd}`);
   await execute(princeCmd).then(resp => {
     console.log(resp.stdout);
@@ -124,7 +133,7 @@ async function generatePdf(list, filename) {
 }
 
 async function requestPage(url) {
-  await got(url, gotOptions).then(resp => {
+  await got(url, {...gotOptions, cookieJar}).then(resp => {
     const dom = new JSDOM(resp.body);
     const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__link--next');
 
@@ -155,7 +164,7 @@ async function requestPage(url) {
           }
 
           if (!argv.listOnly) {
-            generatePdf(listFile, pdfFile);
+            generatePdf(listFile, pdfFile, argv.cookie);
           }
         });
       } else {
@@ -170,7 +179,7 @@ async function requestPage(url) {
 !fs.existsSync(dest) && fs.mkdirSync(dest);
 
 if (argv.pdfOnly) {
-  generatePdf(listFile, pdfFile);
+  generatePdf(listFile, pdfFile, argv.cookie);
 } else {
 
   if (argv.prepend) {

@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 ENV NODE_ENV=production
 
@@ -12,7 +12,7 @@ ARG TARGETARCH
 
 # https://www.princexml.com/latest/
 # https://www.princexml.com/download/prince-14.2-alpine3.13-x86_64.tar.gz -o prince.tar.gz
-ARG PRINCE_VER=20220510
+ARG PRINCE_VER=15.1
 ARG DISTRO=linux-generic
 
 RUN echo "Building for $TARGETARCH"

@@ -34,10 +34,10 @@ To generate PDF from a local Docusaurus instance. You need to first build the si
 
 ```bash
 # Build the site
-yarn build
+(npm|yarn|pnpm) build
 
 # Serve built site locally
-yarn serve
+(npm|yarn|pnpm) serve
 
 # Generate PDF from local Docusaurus instance
 npx docusaurus-prince-pdf -u http://localhost:4000/docs # Change port to your serving port

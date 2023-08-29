@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "test": "node index.js -u https://docusaurus.io/docs/",
-    "release": "npx release-it"
+    "release": "pnpx release-it"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

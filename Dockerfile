@@ -17,8 +17,14 @@ ARG DISTRO=linux-generic
 
 RUN echo "Building for $TARGETARCH"
 
-RUN yarn --frozen-lockfile && \
-    yarn cache clean
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 RUN apk add --no-cache curl
 RUN prince_arch=$([ "$TARGETARCH" == "arm64" ] && echo "aarch64-musl" || echo "x86_64") \

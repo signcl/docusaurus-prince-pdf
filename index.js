@@ -128,7 +128,7 @@ async function generatePdf(list, filename, cookie) {
     console.log(resp.stdout);
     console.log(`Done`);
   }).catch(err => {
-    console.log(err);
+    throw new Error(err);
   });
 }
 
@@ -172,7 +172,7 @@ async function requestPage(url) {
       }
     }
   }).catch(err => {
-    console.log(`Error:`, err);
+    throw new Error(err);
   });
 }
 

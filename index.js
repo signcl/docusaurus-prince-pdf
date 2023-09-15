@@ -136,15 +136,20 @@ async function requestPage(url) {
   await got(url, {...gotOptions, cookieJar}).then(resp => {
     const dom = new JSDOM(resp.body);
     const nextLinkEl = dom.window.document.querySelector(argv.selector || '.pagination-nav__link--next');
+    const nextLink = nextLinkEl && `${baseUrl}${nextLinkEl.href}`;
+    const cycle = buffer.has(nextLink);
 
-    if (nextLinkEl) {
-      const nextLink = `${baseUrl}${nextLinkEl.href}`;
+    if (!cycle && nextLink) {
       console.log(`Got link: ${nextLink}`);
 
       buffer.add(nextLink);
       requestPage(nextLink);
     } else {
-      console.log('No next link found!');
+      if (cycle) {
+        console.log(`Pagination cycle detected on ${url}`);
+      } else {
+        console.log('No next link found!');
+      }
 
       if (argv.append) {
         argv.append.split(',').map(item => {

@@ -120,19 +120,19 @@ bun run index.ts -u http://localhost:4000/docs
 
 ## Options
 
-- `--url` (`-u`): Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/docs/)
+- `--url` (`-u`): Base URL, should be the `baseUrl` of the Docusaurus instance (e.g. https://docusaurus.io/docs/)
 - `--selector` (`-s`): CSS selector to find the link of the next page
-- `--dest` (`-d`): Working directory. Default to ./pdf
+- `--dest` (`-d`): Working directory. Default to `./pdf`
 - `--file` (`-f`): Change default list output filename
 - `--output` (`-o`): Change PDF output filename
 - `--include-index`: Include passed URL in generated PDF
 - `--prepend`: Prepend additional pages, split with comma
 - `--append`: Append additional pages, split with comma
-- `--prince-args`: Additional options for Prince. ie. --prince-args="--page-size='210mm 297mm'" or --prince-args "\\-\\-page\\-size='210mm 297mm'"
+- `--prince-args`: Additional options for Prince. ie. `--prince-args="--page-size='210mm 297mm'"` or `--prince-args "\\-\\-page\\-size='210mm 297mm'"`
 - `--prince-docker`: Use external Prince docker image to generate PDF. See https://github.com/sparanoid/docker-prince for more info
 - `--list-only`: Fetch list without generating PDF
 - `--pdf-only`: Generate PDF without fetching list. Ensure list exists
-- `--cookie`: Specify the cookie with the domain part, e.g. --cookie="token=123456; domain=example.com;"
+- `--cookie`: Specify the cookie with the domain part, e.g. `--cookie="token=123456; domain=example.com;"`
 
 ## How it works
 

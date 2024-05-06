@@ -18,7 +18,7 @@ on:
       - '**'
 
 env:
-  PRINCE_VER: 15.1
+  PRINCE_VER: 15.3
   DOCKERHUB_SLUG: openbayes/docusaurus-prince-pdf
   GHCR_SLUG: ghcr.io/signcl/docusaurus-prince-pdf
 
@@ -27,36 +27,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: 20
 
-    - uses: pnpm/action-setup@v2
-      name: Install pnpm
-      id: pnpm-install
-      with:
-        version: latest
-        run_install: false
-
-    - name: Get pnpm store directory
-      id: pnpm-cache
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-    - uses: actions/cache@v3
-      name: Setup pnpm cache
-      with:
-        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+    - name: Install bun
+      uses: oven-sh/setup-bun@v1
 
     - name: Install dependencies
-      run: pnpm install
+      run: bun install
 
     - name: Install Prince
       run: |
@@ -66,7 +48,7 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: pnpm test
+      run: bun run test
 
     - name: Upload results
       uses: actions/upload-artifact@v3

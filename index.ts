@@ -143,14 +143,21 @@ async function requestPage(url: string) {
 
     // TODO: jsdom does not have bultin DOM types.
     // Use `nextLinkEl instanceof HTMLAnchorElement` instead for happy-dom
-    if (nextLinkEl && 'href' in nextLinkEl) {
+    const nextLink = nextLinkEl && 'href' in nextLinkEl && `${baseUrl}${nextLinkEl.href}`
+    const cycle = buffer.has(nextLink)
+
+    if (!cycle && nextLink) {
       const nextLink = `${baseUrl}${nextLinkEl.href}`
       console.log(`Got link: ${nextLink}`)
 
       buffer.add(nextLink)
       requestPage(nextLink)
     } else {
-      console.log('No next link found!')
+      if (cycle) {
+        console.log(`Pagination cycle detected on ${url}`)
+      } else {
+        console.log('No next link found!')
+      }
 
       if (values.append) {
         values.append.split(',').forEach(async (item) => {

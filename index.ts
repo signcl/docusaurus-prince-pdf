@@ -13,7 +13,7 @@ const __dirname = new URL('.', import.meta.url).pathname
 const { values, positionals } = parseArgs({
   args: Bun.argv,
   options: {
-    /** Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/docs/) */
+    /** Base URL, should be the `baseUrl` of the Docusaurus instance (e.g. https://docusaurus.io/docs/) */
     'url': {
       type: 'string',
       short: 'u',
@@ -23,7 +23,7 @@ const { values, positionals } = parseArgs({
       type: 'string',
       short: 's',
     },
-    /** Working directory. Default to ./pdf */
+    /** Working directory. Default to `./pdf` */
     'dest': {
       type: 'string',
       short: 'd',
@@ -51,7 +51,7 @@ const { values, positionals } = parseArgs({
     'append': {
       type: 'string',
     },
-    /** Additional options for Prince. ie. --prince-args="--page-size='210mm 297mm'" or --prince-args "\\-\\-page\\-size='210mm 297mm'" */
+    /** Additional options for Prince. ie. `--prince-args="--page-size='210mm 297mm'"` or `--prince-args "\\-\\-page\\-size='210mm 297mm'"` */
     'prince-args': {
       type: 'string',
     },
@@ -67,7 +67,7 @@ const { values, positionals } = parseArgs({
     'pdf-only': {
       type: 'boolean',
     },
-    /** Specify the cookie with the domain part, e.g. --cookie="token=123456; domain=example.com;" */
+    /** Specify the cookie with the domain part, e.g. `--cookie="token=123456; domain=example.com;"` */
     'cookie': {
       type: 'string',
     },

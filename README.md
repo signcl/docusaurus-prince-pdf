@@ -43,13 +43,7 @@ To generate PDF from a local Docusaurus instance. You need to first build the si
 npx docusaurus-prince-pdf -u http://localhost:4000/docs # Change port to your serving port
 ```
 
-See help screen for all options:
-
-```bash
-npx docusaurus-prince-pdf -h
-```
-
-## Docker (Recommended)
+## Docker
 
 - [Docker Hub](https://hub.docker.com/r/openbayes/docusaurus-prince-pdf)
 - [ghcr.io](https://github.com/orgs/signcl/packages/container/package/docusaurus-prince-pdf)
@@ -115,6 +109,30 @@ jobs:
 
     # ...other steps
 ```
+
+## Development
+
+You need to have [Bun](https://bun.sh/) installed first. This can also let you run latest code on your local machine.
+
+```bash
+bun run index.ts -u http://localhost:4000/docs
+```
+
+## Options
+
+- `--url` (`-u`): Base URL, should be the baseUrl of the Docusaurus instance (e.g. https://docusaurus.io/docs/)
+- `--selector` (`-s`): CSS selector to find the link of the next page
+- `--dest` (`-d`): Working directory. Default to ./pdf
+- `--file` (`-f`): Change default list output filename
+- `--output` (`-o`): Change PDF output filename
+- `--include-index`: Include passed URL in generated PDF
+- `--prepend`: Prepend additional pages, split with comma
+- `--append`: Append additional pages, split with comma
+- `--prince-args`: Additional options for Prince. ie. --prince-args="--page-size='210mm 297mm'" or --prince-args "\\-\\-page\\-size='210mm 297mm'"
+- `--prince-docker`: Use external Prince docker image to generate PDF. See https://github.com/sparanoid/docker-prince for more info
+- `--list-only`: Fetch list without generating PDF
+- `--pdf-only`: Generate PDF without fetching list. Ensure list exists
+- `--cookie`: Specify the cookie with the domain part, e.g. --cookie="token=123456; domain=example.com;"
 
 ## How it works
 

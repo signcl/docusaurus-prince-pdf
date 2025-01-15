@@ -8,7 +8,7 @@ import { Browser, HTMLAnchorElement } from 'happy-dom'
 const { JSDOM } = jsdom
 const buffer = new Set()
 
-const __dirname = new URL('.', import.meta.url).pathname
+const baseDir = import.meta.dir
 
 const { values, positionals } = parseArgs({
   args: Bun.argv,
@@ -109,8 +109,8 @@ async function generatePdf(list: string, filename: string, cookie?: string) {
   const cookieArg = cookie ? `--cookie "${cookie}"` : ''
 
   const princeCmd = values['prince-args']
-    ? `docker run --rm -i -v ${__dirname}:/config sparanoid/prince --no-warn-css --style=/config/print.css ${cookieArg} --input-list=/config/${list} -o /config/${filename} ${args}`
-    : `prince --no-warn-css --style=${__dirname}print.css ${cookieArg} --input-list=${list} -o ${filename} ${args}`
+    ? `docker run --rm -i -v ${baseDir}/:/config sparanoid/prince --no-warn-css --style=/config/print.css ${cookieArg} --input-list=/config/${list} -o /config/${filename} ${args}`
+    : `prince --no-warn-css --style=${baseDir}/print.css ${cookieArg} --input-list=${list} -o ${filename} ${args}`
   console.log(`Executing command: ${princeCmd}`)
 
   // TODO: https://github.com/oven-sh/bun/issues/9747

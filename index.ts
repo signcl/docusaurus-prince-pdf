@@ -1,4 +1,5 @@
 import { parseArgs } from 'util'
+import { platform } from 'os'
 import { exec } from 'child_process'
 
 import jsdom from 'jsdom'
@@ -8,7 +9,7 @@ import { Browser, HTMLAnchorElement } from 'happy-dom'
 const { JSDOM } = jsdom
 const buffer = new Set()
 
-const __dirname = new URL('.', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname.slice(platform() === 'win32' ? 1 : 0);
 
 const { values, positionals } = parseArgs({
   args: Bun.argv,

@@ -1,6 +1,6 @@
 # Docusaurus Prince PDF Generator
 
-Extract rendered data from Docusaurus and generate PDF, the hard way
+Extract rendered data from Docusaurus/Fumadocs/etc and generate PDF, the hard way
 
 ## Demo/Examples
 
@@ -34,10 +34,10 @@ To generate PDF from a local Docusaurus instance. You need to first build the si
 
 ```bash
 # Build the site
-(npm|yarn|pnpm) build
+(npm|bun|yarn|pnpm) build
 
 # Serve built site locally
-(npm|yarn|pnpm) serve
+(npm|bun|yarn|pnpm) serve
 
 # Generate PDF from local Docusaurus instance
 npx docusaurus-prince-pdf -u http://localhost:4000/docs # Change port to your serving port
@@ -143,6 +143,18 @@ You can specify the CSS selector if you're using custom Docusaurus theme:
 ```bash
 npx docusaurus-prince-pdf -u https://openbayes.com/ --selector 'nav.custom-pagination-item--next > a'
 ```
+
+## Does it work with Fumadocs or other static site/docs generators?
+
+It should work with any static site/docs generators that have consistent pagination links.
+
+For Fumadocs, you can use the same method to generate the PDF using custom selector like this:
+
+```bash
+npx docusaurus-prince-pdf -u https://fumadocs.vercel.app/docs/ui --selector '#nd-page > article > div.grid.grid-cols-2.gap-4.pb-6 a:last-child'
+```
+
+The Tailwind-styled selector is not elegant but it works.
 
 ## Why this package?
 

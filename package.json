@@ -22,7 +22,7 @@
     }
   },
   "dependencies": {
-    "happy-dom": "^16.6.0",
+    "happy-dom": "^17.0.0",
     "jsdom": "^26.0.0"
   },
   "packageManager": "bun@1.1.7",

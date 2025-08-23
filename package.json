@@ -10,8 +10,7 @@
   "license": "MIT",
   "scripts": {
     "test": "bun run index.ts -u https://docusaurus.io/docs/",
-    "compile": "bash run build.sh",
-    "transpile": "tsc",
+    "build": "bash run build.sh",
     "release": "bunx release-it",
     "lint": "biome check",
     "format": "biome format --write"

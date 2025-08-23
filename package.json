@@ -24,7 +24,6 @@
     }
   },
   "dependencies": {
-    "happy-dom": "^16.8.1",
     "jsdom": "^26.1.0"
   },
   "packageManager": "bun@1.1.7",

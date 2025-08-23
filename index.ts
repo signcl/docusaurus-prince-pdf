@@ -128,17 +128,10 @@ async function requestPage(url: string) {
     const resp = await fetch(url, fetchOptions)
     const body = await resp.text()
 
-    // TODO: https://github.com/capricorn86/happy-dom/issues/1415
-    // const page = browser.newPage()
-    // page.url = url
-    // page.content = body
-    // const dom = page.mainFrame
-
     const dom = new JSDOM(body).window
     const nextLinkEl = dom.document.body.querySelector(values.selector || '.pagination-nav__link--next')
 
     // TODO: jsdom does not have bultin DOM types.
-    // Use `nextLinkEl instanceof HTMLAnchorElement` instead for happy-dom
     const nextLink = nextLinkEl && 'href' in nextLinkEl && `${baseUrl}${nextLinkEl.href}`
     const cycle = buffer.has(nextLink)
 

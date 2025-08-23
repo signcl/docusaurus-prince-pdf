@@ -1,8 +1,6 @@
-import { parseArgs } from 'util'
-import { exec } from 'child_process'
-
+import { exec } from 'node:child_process'
+import { parseArgs } from 'node:util'
 import jsdom from 'jsdom'
-import { Browser, HTMLAnchorElement } from 'happy-dom'
 
 // const browser = new Browser()
 const { JSDOM } = jsdom
@@ -10,32 +8,32 @@ const buffer = new Set()
 
 const baseDir = import.meta.dir
 
-const { values, positionals } = parseArgs({
+const { values } = parseArgs({
   args: Bun.argv,
   options: {
     /** Base URL, should be the `baseUrl` of the Docusaurus instance (e.g. https://docusaurus.io/docs/) */
-    'url': {
+    url: {
       type: 'string',
       short: 'u',
     },
     /** CSS selector to find the link of the next page */
-    'selector': {
+    selector: {
       type: 'string',
       short: 's',
     },
     /** Working directory. Default to `./pdf` */
-    'dest': {
+    dest: {
       type: 'string',
       short: 'd',
       default: './pdf',
     },
     /** Change default list output filename */
-    'file': {
+    file: {
       type: 'string',
       short: 'f',
     },
     /** Change PDF output filename */
-    'output': {
+    output: {
       type: 'string',
       short: 'o',
     },
@@ -44,11 +42,11 @@ const { values, positionals } = parseArgs({
       type: 'boolean',
     },
     /** Prepend additional pages, split with comma */
-    'prepend': {
+    prepend: {
       type: 'string',
     },
     /** Append additional pages, split with comma */
-    'append': {
+    append: {
       type: 'string',
     },
     /** Additional options for Prince. ie. `--prince-args="--page-size='210mm 297mm'"` or `--prince-args "\\-\\-page\\-size='210mm 297mm'"` */
@@ -68,7 +66,7 @@ const { values, positionals } = parseArgs({
       type: 'boolean',
     },
     /** Specify the cookie with the domain part, e.g. `--cookie="token=123456; domain=example.com;"` */
-    'cookie': {
+    cookie: {
       type: 'string',
     },
   },
@@ -80,8 +78,7 @@ const url = values.url ? values.url.replace(/\/$/, '') : 'https://dev.openbayes.
 const parsedUrl = new URL(url)
 const baseUrl = parsedUrl.origin
 const scope = parsedUrl.pathname
-const scopeName =
-  scope !== '/' ? `-${scope.replace(/\/$/g, '').replace(/^\//g, '').replace(/\//g, '-')}` : ''
+const scopeName = scope !== '/' ? `-${scope.replace(/\/$/g, '').replace(/^\//g, '').replace(/\//g, '-')}` : ''
 
 const dest = values.dest
 const listFile = values.file || `${dest}/${parsedUrl.hostname}${scopeName}.txt`
@@ -117,11 +114,11 @@ async function generatePdf(list: string, filename: string, cookie?: string) {
   // await $`${princeCmd}`
 
   await execute(princeCmd)
-    .then((resp) => {
+    .then(resp => {
       console.log(resp.stdout)
       console.log(`Done`)
     })
-    .catch((err) => {
+    .catch(err => {
       throw new Error(err)
     })
 }
@@ -138,9 +135,7 @@ async function requestPage(url: string) {
     // const dom = page.mainFrame
 
     const dom = new JSDOM(body).window
-    const nextLinkEl = dom.document.body.querySelector(
-      values.selector || '.pagination-nav__link--next'
-    )
+    const nextLinkEl = dom.document.body.querySelector(values.selector || '.pagination-nav__link--next')
 
     // TODO: jsdom does not have bultin DOM types.
     // Use `nextLinkEl instanceof HTMLAnchorElement` instead for happy-dom
@@ -161,7 +156,7 @@ async function requestPage(url: string) {
       }
 
       if (values.append) {
-        values.append.split(',').forEach(async (item) => {
+        values.append.split(',').forEach(async item => {
           const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`
           buffer.add(url)
           console.log(`Got link: ${url} [append]`)
@@ -188,7 +183,7 @@ if (values['pdf-only']) {
   generatePdf(listFile, pdfFile, values.cookie)
 } else {
   if (values.prepend) {
-    values.prepend.split(',').map((item) => {
+    values.prepend.split(',').forEach(item => {
       const url = item.match(/^https?:\/\//) ? item : `${baseUrl}${scope}${item}`
       buffer.add(url)
       console.log(`Got link: ${url} [prepend]`)

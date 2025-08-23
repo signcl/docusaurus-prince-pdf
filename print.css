@@ -5,9 +5,13 @@
     display: block !important;
   }
 
-  .markdown header h1 { string-set: doctitle content() }
+  .markdown header h1 {
+    /* biome-ignore lint/correctness/noUnknownFunction: vendor-specific */
+    string-set: doctitle content();
+  }
 
   @page {
+    /* biome-ignore lint/correctness/noUnknownProperty: vendor-specific */
     prince-shrink-to-fit: auto;
   }
 

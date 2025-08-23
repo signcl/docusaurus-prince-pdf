@@ -10,8 +10,11 @@
   "license": "MIT",
   "scripts": {
     "test": "bun run index.ts -u https://docusaurus.io/docs/",
-    "compile": "bun build --compile --minify --sourcemap ./index.ts --outfile dpdf",
-    "release": "bunx release-it"
+    "compile": "bash run build.sh",
+    "transpile": "tsc",
+    "release": "bunx release-it",
+    "lint": "biome check",
+    "format": "biome format --write"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -22,16 +25,16 @@
     }
   },
   "dependencies": {
-    "happy-dom": "^16.6.0",
-    "jsdom": "^26.0.0"
+    "happy-dom": "^16.8.1",
+    "jsdom": "^26.1.0"
   },
   "packageManager": "bun@1.1.7",
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
     "@types/bun": "latest",
-    "@types/jsdom": "^21.1.7",
-    "prettier": "^3.4.2"
+    "@types/jsdom": "^21.1.7"
   },
   "peerDependencies": {
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.2"
   }
 }

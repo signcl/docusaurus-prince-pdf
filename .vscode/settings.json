@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  // https://biomejs.dev/reference/vscode/
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  }
+}
